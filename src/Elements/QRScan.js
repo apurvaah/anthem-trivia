@@ -1,10 +1,4 @@
-import './style.css'
-
 const QRScan = () => {
-    let dict = { a:"img1" , b:"img2" }
-
-    let img_key =  Object.keys(dict)
-    let result_img = Math.random()* img_key.length
 
     return (
         <div>

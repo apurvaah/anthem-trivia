@@ -17,6 +17,12 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 def hello_world():
     return app.send_static_file('index.html')
 
+@app.route("/quiz")
+def loadJson():
+    file = open("./build/quiz.json")
+    data = json.load(file)
+    return json.dumps(data)
+
 @app.route("/rewards")
 def print_rewards():
     prob = score_calculation(75,25)

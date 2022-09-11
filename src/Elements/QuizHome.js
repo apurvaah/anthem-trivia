@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Start from './Start';
 import Quiz from './Quiz';
 import Result from './Result';
-import quizdata from './quizdata'
+import '../Styles/QuizHome.css'
 
 
 const QuizHome = () => {
@@ -12,15 +12,15 @@ const QuizHome = () => {
   // stop it when needed
   const Ref = useRef(null);
 
-  // The state for our timer
-  const [timer, setTimer] = useState('00:00:00');
-
-  // For storing reward
-  const [reward, setReward] = useState();
-
-  //mocking gas money value
+  // mocking gas money value
   const gasMoney = (Math.random() * (37)) + 3
 
+  // Code for timer starts here
+
+  // SHow timer or not
+  const [showTimer, setShowTimer] = useState(false);
+  // The state for our timer
+  const [timer, setTimer] = useState('00:00:00');
 
   const getTimeRemaining = (e) => {
     const total = Date.parse(e) - Date.parse(new Date());
@@ -32,9 +32,7 @@ const QuizHome = () => {
     };
   }
 
-
   const startTimer = (e) => {
-    /* clearTimer(getDeadTime());*/
     let { total, hours, minutes, seconds }
       = getTimeRemaining(e);
     if (total >= 0) {
@@ -50,17 +48,8 @@ const QuizHome = () => {
     }
   }
 
-
   const clearTimer = (e) => {
-
-    // If you adjust it you should also need to
-    // adjust the Endtime formula we are about
-    // to code next    
     setTimer('00:01:40');
-
-    // If you try to remove this line the 
-    // updating of timer Variable will be
-    // after 1000ms or 1sec
     if (Ref.current) clearInterval(Ref.current);
     const id = setInterval(() => {
       startTimer(e);
@@ -70,28 +59,8 @@ const QuizHome = () => {
 
   const getDeadTime = () => {
     let deadline = new Date();
-
-    // This is where you need to adjust if 
-    // you entend to add more time
     deadline.setSeconds(deadline.getSeconds() + 100);
     return deadline;
-  }
-
-  // We can use useEffect so that when the component
-  // mount the timer will start as soon as possible
-
-  // We put empty array to act as componentDid
-  // mount only
-  useEffect(() => {
-    clearTimer(getDeadTime());
-  }, []);
-
-  // Another way to call the clearTimer() to start
-  // the countdown is via action event from the
-  // button first we create function to be called
-  // by the button
-  const onClickReset = () => {
-    clearTimer(getDeadTime());
   }
 
   // All Quizs, Current Question, Index of Current Question, Answer, Selected Answer, Total Marks
@@ -109,18 +78,9 @@ const QuizHome = () => {
 
   // Load JSON Data
   useEffect(() => {
-    console.log(quizdata)
-    setQuizs(quizdata)
-    // fetch('/quiz')
-    //   .then(res => {
-    //     console.log("-------------------------") // 2
-    //     const r1 = res
-    //     const r = res.json();
-    //     console.log("Able to parse json maybe")
-    //     console.log(r)
-    //     console.log(r1)
-    // })
-      //.then(data => {console.log("----------------------");console.log(data);setQuizs(data);})
+    fetch('/quiz')
+      .then(res => res.json())
+      .then(data => setQuizs(data))
   }, []);
 
   // Set a Single Question
@@ -134,26 +94,10 @@ const QuizHome = () => {
   const startQuiz = (e) => {
     setShowStart(false);
     setShowQuiz(true);
-    setTimer('00:01:40')
-    startTimer(e)
+    setTimer('00:01:40');
+    setShowTimer(true);
+    clearTimer(getDeadTime());
   }
-
-
-
-
-
-
-
-
-
-  // We can use useEffect so that when the component
-  // mount the timer will start as soon as possible
-
-  // We put empty array to act as componentDid
-  // mount only
-
-
-
 
   // Check Answer
   const checkAnswer = (event, selected) => {
@@ -193,24 +137,19 @@ const QuizHome = () => {
       body: JSON.stringify({ "marks": marks, "gasMoney": gasMoney })  // Update based on Flask
     }).then(response => response.text())
     .then(data => {
-      setReward(data)
-      doNext()
+      fetch("/update-rewards", {     // will need this to connect to backend to parse database
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ "reward": data })  // Update based on Flask
+        })
     })
-  }
-
-  const doNext = async (e) => {
-     await fetch("/update-rewards", {     // will need this to connect to backend to parse database
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({ "reward": reward })  // Update based on Flask
-      })
   }
 
   return (
     <>
-      <div className="App">
-        <h2 id="timer">{timer}</h2>
-      </div>
+      {showTimer?<div id="timer-bkg">
+        <h1 id="timer">{timer}</h1>
+      </div>:null}
       {/* Welcome Page */}
       <Start
         startQuiz={startQuiz}

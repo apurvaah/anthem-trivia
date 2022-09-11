@@ -1,0 +1,17 @@
+/* Timer */
+
+@font-face {
+    font-family: 'digital-7';
+    src: url('./fonts/digital-7.ttf');
+}
+
+#timer-bkg {
+    align-self: center;
+    text-align: center;
+}
+
+#timer {
+    color: #ffffff;
+    background-color: #000000;
+    font-family: 'digital-7', sans-serif;
+}
