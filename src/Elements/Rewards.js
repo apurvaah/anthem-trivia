@@ -7,12 +7,10 @@ const Reward = () => {
     const [showButton, setShowButton] = useState(true)
 
     const onClick = async (e) => {
-        console.log("Start Game Button was clicked") // Check to see if button is working
-
         await fetch("/get-reward", {     // will need this to connect to backend to parse database
             method: "POST",
             headers: { "Content-Type": "application/json", "Accept": "application/json" },
-            body: {}  // Update based on Flask
+            body: {}
           }).then(response => response.text())
             .then(data => {
                 setReward(data);
@@ -24,9 +22,10 @@ const Reward = () => {
 
     return (
         <div>
-
+            {/* Display button to click for opening reward */}
             <div class="card align-items-center justify-content-center">
             { showButton? <button class="btn btn-primary align-items-center justify-content-center" type="button" onClick={onClick}>Reveal Reward</button> : null}
+            {/* Reward coupon */}
             { showReward ? <div class="card-body">{reward}</div> : null }
             </div>
         </div>

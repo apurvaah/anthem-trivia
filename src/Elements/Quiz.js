@@ -9,10 +9,13 @@ const Quiz = ({ showQuiz, question, quizs, checkAnswer, correctAnswer, selectedA
                     <div className="col-lg-8">
                         <div className="card p-4" style={{ background: '#3d3d3d', borderColor: '#646464' }}>
                             <div className="d-flex justify-content-between gap-md-3">
+                                {/* display the question */}
                                 <h5 className='mb-2 fs-normal lh-base'>{question?.question}</h5>
+                                {/* display question number */}
                                 <h5 style={{ color: '#60d600', width: '100px', textAlign: 'right' }}>{quizs.indexOf(question) + 1} / {quizs?.length}</h5>
                             </div>
                             <div>
+                                {/* Multiple choice options */}
                                 {
                                     question?.options?.map((item, index) => <button
                                         key={index}
@@ -25,6 +28,7 @@ const Quiz = ({ showQuiz, question, quizs, checkAnswer, correctAnswer, selectedA
                             </div>
 
                             {
+                                // Display either next question button or show result button depending on question number
                                 (questionIndex + 1) !== quizs.length ?
                                     <button className='btn py-2 w-100 mt-3 bg-primary text-light fw-bold' onClick={nextQuestion} disabled={!selectedAnswer}>Next Question</button>
                                     :

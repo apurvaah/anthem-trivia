@@ -3,7 +3,6 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import QRScan from './Elements/QRScan';
 import Reward from './Elements/Rewards';
 import QuizHome from './Elements/QuizHome';
 
@@ -13,8 +12,8 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          {/* Using routing to route different React pages */}
           <Route exact path="/" element={<QuizHome />} />
-          <Route exact path="/qrscan" element={<QRScan />} />
           <Route exact path="/rewardme" element={<Reward />} />
         </Routes>
       </BrowserRouter>
