@@ -15,8 +15,6 @@ const Reward = () => {
             body: {}  // Update based on Flask
           }).then(response => response.text())
             .then(data => {
-                console.log("ON REWARDS GETTING DATA")
-                console.log(data)
                 setReward(data);
             })
 
@@ -27,9 +25,9 @@ const Reward = () => {
     return (
         <div>
 
-            <div id="container">
-            { showButton? <button class="text-white button" id="start-button" type="button" onClick={onClick}>Reveal Reward</button> : null}
-            { showReward ? <div class="reward container">{reward}</div> : null }
+            <div class="card align-items-center justify-content-center">
+            { showButton? <button class="btn btn-primary align-items-center justify-content-center" type="button" onClick={onClick}>Reveal Reward</button> : null}
+            { showReward ? <div class="card-body">{reward}</div> : null }
             </div>
         </div>
     );
