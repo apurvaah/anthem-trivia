@@ -30,5 +30,6 @@ def score_calculation(get_score,get_cash):
     max_score=100
     min_score=0
     total_score = get_score + get_cash
-    X_std = (total_score - min_score) / (max_score - min_score)*(0.75)
+    # X_std = (total_score - min_score) / (max_score - min_score)*(0.75)
+    X_std = (total_score - min_score) / (max_score - min_score)
     return X_std
