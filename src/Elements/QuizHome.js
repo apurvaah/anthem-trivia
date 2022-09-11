@@ -31,6 +31,8 @@ const QuizHome = () => {
       total, hours, minutes, seconds
     };
   }
+  
+  var n=0
 
   const startTimer = (e) => {
     let { total, hours, minutes, seconds }
@@ -45,6 +47,13 @@ const QuizHome = () => {
         (minutes > 9 ? minutes : '0' + minutes) + ':'
         + (seconds > 9 ? seconds : '0' + seconds)
       )
+    }
+    else {
+      while (n<1){
+        alert("Time Up!");
+        n = n+1;
+      }
+      showTheResult(e);
     }
   }
 
