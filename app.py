@@ -37,7 +37,22 @@ def sendRewardsData():
     reward = random_rewards(int(math.floor(prob*100)))
     return reward
 
-reward_string = "Better Luck Next Time"
+intList = [5,10,20,30,25]
+
+randomNumber = random.randint(0,4)
+randomNumber2 = random.randint(0,4)
+
+itemList = ["Doritos", "Tacos", "Candies", "Doughnuts", "Dr.Pepper", "Lemonade", "DoubleMint", "Lays", "Garden Fresh Vegetables"]
+
+randomString = random.randint(0,8)
+
+reward_string_list = ["You have won " + str(intList[randomNumber]) + " % off of " + str(itemList[randomString]),
+"You have won " + str(intList[randomNumber]) + " % off of " + str(itemList[randomString]),
+"You have won " + str(intList[randomNumber]) + " % off of " + str(itemList[randomString]),
+"You have won " + str(intList[randomNumber]) + " % off of " + str(itemList[randomString]),
+"Better Luck Next Time"]
+
+reward_string = reward_string_list[randomNumber2]
 
 # method to update the reward string in order to store it
 @app.route('/update-rewards',methods=['POST'])
