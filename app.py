@@ -24,18 +24,7 @@ def loadJson():
     data = json.load(file)
     return json.dumps(data)
 
-# Method to collect data on quiz score and gas expenditure of participant in ongoing session
-@app.route('/send-rewards-data',methods=['POST'])
-@cross_origin()
-def sendRewardsData():
-    marks_and_money = request.get_json()
-    marks = marks_and_money.get("marks")
-    cash = marks_and_money.get("gasMoney")
-    # prob = score_calculation(marks,cash)
-    # Keeping cash constant for demo purposes as we want more coupons and less better lucks next time
-    prob = score_calculation(marks,50)
-    reward = random_rewards(int(math.floor(prob*100)))
-    return reward
+
 
 intList = [5,10,20,30,25]
 
@@ -53,6 +42,21 @@ reward_string_list = ["You have won " + str(intList[randomNumber]) + " % off of 
 "Better Luck Next Time"]
 
 reward_string = reward_string_list[randomNumber2]
+
+
+# Method to collect data on quiz score and gas expenditure of participant in ongoing session
+@app.route('/send-rewards-data',methods=['POST'])
+@cross_origin()
+def sendRewardsData():
+    marks_and_money = request.get_json()
+    marks = marks_and_money.get("marks")
+    cash = marks_and_money.get("gasMoney")
+    # prob = score_calculation(marks,cash)
+    # Keeping cash constant for demo purposes as we want more coupons and less better lucks next time
+    prob = score_calculation(marks,50)
+    # reward = random_rewards(int(math.floor(prob*100)))
+    reward = reward_string
+    return reward
 
 # method to update the reward string in order to store it
 @app.route('/update-rewards',methods=['POST'])
