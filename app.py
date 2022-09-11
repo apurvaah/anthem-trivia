@@ -12,6 +12,14 @@ CORS(app)
 # configuring headers for app
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+reward_string = "Better luck next Time :("
+
+def setRewardString(s):
+    reward_string = s
+
+def getRewardString():
+    return reward_string
+
 # when app is accessed, should show reactJS file
 @app.route("/")
 def hello_world():
@@ -37,8 +45,6 @@ def sendRewardsData():
     reward = random_rewards(int(math.floor(prob*100)))
     return reward
 
-reward_string = "Better Luck Next Time"
-
 # method to update the reward string in order to store it
 @app.route('/update-rewards',methods=['POST'])
 @cross_origin()
@@ -46,14 +52,15 @@ def updateRewardsData():
     reward = request.get_json().get("reward")
     print("Reward ---------------------")
     print(reward)
-    reward_string = reward
+    setRewardString(reward)
     return json.dumps({'reward':reward_string})
 
 # method to fetch reward on rewards screen
 @app.route('/get-reward',methods=['POST'])
 @cross_origin()
 def getRewardsData():
-    return reward_string
+    print(getRewardString())
+    return getRewardString()
 
 # Run flask app on heroku
 if __name__ == "__main__":

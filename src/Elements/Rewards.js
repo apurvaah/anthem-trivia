@@ -13,6 +13,8 @@ const Reward = () => {
             body: {}
           }).then(response => response.text())
             .then(data => {
+                console.log("---------------COUPON--------------")
+                console.log(data);
                 setReward(data);
             })
 
