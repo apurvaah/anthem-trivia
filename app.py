@@ -12,13 +12,13 @@ CORS(app)
 # configuring headers for app
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-reward_string = "Better luck next Time :("
+app.config['reward_string'] = "Better luck next Time :("
 
 def setRewardString(s):
-    reward_string = s
+    app.config['reward_string'] = s
 
 def getRewardString():
-    return reward_string
+    return app.config['reward_string']
 
 # when app is accessed, should show reactJS file
 @app.route("/")
@@ -53,7 +53,7 @@ def updateRewardsData():
     print("Reward ---------------------")
     print(reward)
     setRewardString(reward)
-    return json.dumps({'reward':reward_string})
+    return json.dumps({'reward':app.config['reward_string']})
 
 # method to fetch reward on rewards screen
 @app.route('/get-reward',methods=['POST'])
